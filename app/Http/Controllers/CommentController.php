@@ -28,9 +28,17 @@ class CommentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreCommentRequest $request)
-    {
-        //
-    }
+{
+    // Create and save the comment using validated data
+    Comment::create([
+        'body' => $request->body,
+        'post_id' => $request->post_id,
+        'user_id' => auth()->id(),
+    ]);
+
+    // Redirect back with success message
+    return redirect()->back()->with('success', 'Comment posted successfully!');
+}
 
     /**
      * Display the specified resource.
